@@ -1,0 +1,23 @@
+name: example
+description: Demonstrates how to use the large_content_viewer plugin.
+publish_to: 'none' # Remove this line if you wish to publish this example to pub.dev
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Add the dependency on the parent package
+  large_content_viewer:
+    path: ../
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true 
