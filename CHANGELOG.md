@@ -1,3 +1,7 @@
+## 0.1.1
+
+* Minor updates in the README.md
+
 ## 0.1.0
 
 * Initial release of the `large_content_viewer` package.
