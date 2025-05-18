@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         brightness: Brightness.light,
+        useMaterial3: false,
       ),
       darkTheme: ThemeData(
         primarySwatch: Colors.blue,
@@ -42,26 +43,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  Widget _buildNavItem(
-      {required IconData icon,
-      required IconData selectedIcon,
-      required String label,
-      required int index,
-      required bool isSelected,
-      required VoidCallback onLongPressEnd}) {
-    final iconWidget = Icon(isSelected ? selectedIcon : icon);
-    final labelWidget = Text(label);
-
-    return LargeContentViewer(
-      scaleFactor: 2.0,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [iconWidget],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,8 +53,10 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'Long-press the bottom navigation items.',
+            LargeContentViewer(
+              child: Text(
+                'Long-press the bottom navigation items.',
+              ),
             ),
             SizedBox(height: 20),
             Padding(
@@ -86,46 +69,97 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        // Use showUnselectedLabels/showSelectedLabels for consistent layout
-        showUnselectedLabels: true,
-        showSelectedLabels: true,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: _buildNavItem(
-                icon: Icons.home_outlined,
-                selectedIcon: Icons.home,
-                label: 'Home',
-                index: 0,
-                isSelected: _selectedIndex == 0,
-                onLongPressEnd: () {}),
-            label:
-                'Home', // Label required but visually provided by _buildNavItem
-          ),
-          BottomNavigationBarItem(
-            icon: _buildNavItem(
-                icon: Icons.search_outlined,
-                selectedIcon: Icons.search,
-                label: 'Search',
-                index: 1,
-                isSelected: _selectedIndex == 1,
-                onLongPressEnd: () {}),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: _buildNavItem(
-                icon: Icons.person_outline,
-                selectedIcon: Icons.person,
-                label: 'Profile',
-                index: 2,
-                isSelected: _selectedIndex == 2,
-                onLongPressEnd: () {}),
-            label: 'Profile',
-          ),
-        ],
+      bottomNavigationBar: _AppBottomNavigationBar(
         currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+        onItemTapped: _onItemTapped,
       ),
+    );
+  }
+}
+
+// A widget that represents the bottom navigation bar for the app.
+class _AppBottomNavigationBar extends StatelessWidget {
+  const _AppBottomNavigationBar({
+    required this.currentIndex,
+    required this.onItemTapped,
+  });
+
+  final int currentIndex;
+  final ValueChanged<int> onItemTapped;
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      showUnselectedLabels: true,
+      showSelectedLabels: true,
+      items: <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: _NavItemWidget(
+            icon: Icons.home_outlined,
+            selectedIcon: Icons.home,
+            label: 'Home',
+            isSelected: currentIndex == 0,
+          ),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: _NavItemWidget(
+            icon: Icons.search_outlined,
+            selectedIcon: Icons.search,
+            label: 'Search',
+            isSelected: currentIndex == 1,
+          ),
+          label: 'Search',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(currentIndex == 2 ? Icons.person : Icons.person_outline),
+          label: 'Profile',
+        ),
+      ],
+      currentIndex: currentIndex,
+      onTap: onItemTapped,
+    );
+  }
+}
+
+// A widget that represents a navigation item with Large Content Viewer support.
+//
+// This widget wraps an icon in a LargeContentViewer to show an enlarged
+// version when long-pressed.
+class _NavItemWidget extends StatelessWidget {
+  // Creates a navigation item widget.
+  const _NavItemWidget({
+    required this.icon,
+    required this.selectedIcon,
+    required this.label,
+    required this.isSelected,
+  });
+
+  // The icon to display when not selected.
+  final IconData icon;
+
+  // The icon to display when selected.
+  final IconData selectedIcon;
+
+  // The label text for the navigation item.
+  final String label;
+
+  // Whether this navigation item is currently selected.
+  final bool isSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return LargeContentViewer(
+      scaleFactor: 2.0,
+      customOverlayChild: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(isSelected ? selectedIcon : icon, size: 32),
+          const SizedBox(height: 8),
+          Text(label, style: const TextStyle(fontSize: 16)),
+        ],
+      ),
+      child: Icon(isSelected ? selectedIcon : icon),
     );
   }
 }
