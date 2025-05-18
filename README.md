@@ -22,7 +22,7 @@ improving accessibility for all users by making UI elements easier to see on dem
 
 Works on both iOS and Android. 
 
-<img src="images/example.gif" alt="Large Content Viewer Demo" width="300"/>
+<img src="https://raw.githubusercontent.com/MaElaRo/large_content_viewer/main/images/example.gif" alt="Large Content Viewer Demo" width="300"/>
 
 
 
