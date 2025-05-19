@@ -1,7 +1,7 @@
 name: large_content_viewer
 description: >-
   A Flutter widget that mimics the iOS Large Content Viewer behavior.
-version: 0.1.1
+version: 0.1.2
 repository: https://github.com/MaElaRo/large_content_viewer
 
 environment:
