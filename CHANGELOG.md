@@ -1,3 +1,7 @@
+## 0.1.2
+
+* Minor updates in pubspec.yaml
+
 ## 0.1.1
 
 * Minor updates in the README.md
