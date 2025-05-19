@@ -1,8 +1,6 @@
 name: large_content_viewer
 description: >-
-  A Flutter widget that mimics the iOS Large Content Viewer behavior, showing a
-  magnified view of its child on long-press, useful for accessibility large text
-  sizes. Works on both iOS and Android.
+  A Flutter widget that mimics the iOS Large Content Viewer behavior.
 version: 0.1.1
 repository: https://github.com/MaElaRo/large_content_viewer
 
