@@ -197,14 +197,7 @@ class _OverlayContent extends StatelessWidget {
     final effectivePadding = themeData.padding ??
         const EdgeInsets.symmetric(vertical: 20.0, horizontal: 24.0);
 
-    final effectiveConstraints = themeData.constraints ??
-        const BoxConstraints(
-          minWidth: 150,
-          maxWidth: 300,
-          minHeight: 80,
-          maxHeight: 300,
-        );
-
+    final effectiveConstraints = themeData.constraints;
     final effectiveTextStyle = themeData.textStyle ??
         textTheme.bodyLarge!.copyWith(
           color: colors.onSurface,
@@ -222,7 +215,7 @@ class _OverlayContent extends StatelessWidget {
         color: effectiveBackgroundColor,
         elevation: effectiveElevation,
         borderRadius: effectiveBorderRadius,
-        child: ConstrainedBox(
+        child: Container(
           constraints: effectiveConstraints,
           child: Padding(
             padding: effectivePadding,
@@ -230,7 +223,7 @@ class _OverlayContent extends StatelessWidget {
               style: effectiveTextStyle,
               child: IconTheme(
                 data: effectiveIconTheme,
-                child: Center(child: effectiveContent),
+                child: effectiveContent,
               ),
             ),
           ),

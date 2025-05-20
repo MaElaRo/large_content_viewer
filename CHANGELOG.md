@@ -1,3 +1,7 @@
+## 0.1.3
+
+* Removed constraints
+
 ## 0.1.2
 
 * Minor updates in pubspec.yaml
