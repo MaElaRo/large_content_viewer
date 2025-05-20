@@ -1,3 +1,8 @@
+## 0.1.4
+
+* Added `enabledFromTextScaleFactor`:
+The popup overlay will now only activate when the app’s text scale factor meets or exceeds this threshold
+
 ## 0.1.3
 
 * Removed constraints

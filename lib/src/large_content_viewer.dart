@@ -56,6 +56,7 @@ class LargeContentViewer extends StatefulWidget {
     required this.child,
     this.customOverlayChild,
     this.scaleFactor = 2.0,
+    this.enabledFromTextScaleFactor = 1.6,
   });
 
   /// The widget below this widget in the tree.
@@ -79,21 +80,33 @@ class LargeContentViewer extends StatefulWidget {
   /// Defaults to 2.0, which means the child will appear twice as large in the popup.
   final double scaleFactor;
 
+  /// Minimum text scale factor at which the viewer becomes active.
+  /// This allows disabling the popup for users who don’t use large text.
+  /// Defaults to 1.6.
+  final double enabledFromTextScaleFactor;
+
   @override
   State<LargeContentViewer> createState() => _LargeContentViewerState();
 }
 
-// Manages the state for [LargeContentViewer].
-// This includes handling the overlay entry for the popup.
+/// Manages the state for [LargeContentViewer].
+/// This includes handling the overlay entry for the popup.
 class _LargeContentViewerState extends State<LargeContentViewer> {
   OverlayEntry? _overlayEntry;
 
-  // Shows the popup overlay.
-  // Creates and inserts an [OverlayEntry] containing the [_OverlayContent].
-  // Haptic feedback is triggered. If an overlay is already visible,
-  // this method does nothing.
+  /// Shows the popup overlay if conditions are met.
+  ///
+  /// This method creates and inserts an [OverlayEntry] containing the [_OverlayContent].
+  /// It triggers haptic feedback upon activation.
+  ///
+  /// If an overlay is already visible, or the effective text scale factor
+  /// (obtained via [MediaQuery.textScalerOf]) is below [enabledFromTextScaleFactor],
+  /// the method exits early and does nothing.
   void _showPopup(BuildContext context) {
-    if (_overlayEntry != null) {
+    final currentScale = MediaQuery.textScalerOf(context).scale(1.0);
+
+    if (currentScale < widget.enabledFromTextScaleFactor ||
+        _overlayEntry != null) {
       return;
     }
 
@@ -118,8 +131,8 @@ class _LargeContentViewerState extends State<LargeContentViewer> {
     Overlay.of(context, rootOverlay: true).insert(_overlayEntry!);
   }
 
-  // Hides the popup overlay.
-  // Removes the [OverlayEntry] if it exists.
+  /// Hides the popup overlay.
+  /// Removes the [OverlayEntry] if it exists.
   void _hidePopup() {
     // debugPrint("LCV: _hidePopup called");
     _overlayEntry?.remove();
@@ -145,11 +158,11 @@ class _LargeContentViewerState extends State<LargeContentViewer> {
   }
 }
 
-// The content widget displayed in the overlay popup.
-// This widget is responsible for rendering the actual content of the popup,
-// which is either a scaled version of the original [LargeContentViewer.child]
-// or the custom [LargeContentViewer.customOverlayChild]. It applies styling from
-// [LargeContentViewerThemeData].
+/// The content widget displayed in the overlay popup.
+/// This widget is responsible for rendering the actual content of the popup,
+/// which is either a scaled version of the original [LargeContentViewer.child]
+/// or the custom [LargeContentViewer.customOverlayChild]. It applies styling from
+/// [LargeContentViewerThemeData].
 class _OverlayContent extends StatelessWidget {
   // Creates the content for the overlay.
   const _OverlayContent({
@@ -159,18 +172,18 @@ class _OverlayContent extends StatelessWidget {
     required this.themeData,
   });
 
-  // The original child widget from [LargeContentViewer].
-  // Used if [customOverlayChild] is null.
+  /// The original child widget from [LargeContentViewer].
+  /// Used if [customOverlayChild] is null.
   final Widget child;
 
-  // The custom child widget for the overlay from [LargeContentViewer.customOverlayChild].
-  // If null, [child] is scaled by [scaleFactor].
+  /// The custom child widget for the overlay from [LargeContentViewer.customOverlayChild].
+  /// If null, [child] is scaled by [scaleFactor].
   final Widget? customOverlayChild;
 
-  // The factor by which to scale [child] if [customOverlayChild] is null.
+  /// The factor by which to scale [child] if [customOverlayChild] is null.
   final double scaleFactor;
 
-  // The theme data to use for styling the overlay.
+  /// The theme data to use for styling the overlay.
   final LargeContentViewerThemeData themeData;
 
   @override

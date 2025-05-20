@@ -16,15 +16,18 @@ void main() {
     LargeContentViewerThemeData? themeData,
   }) async {
     await tester.pumpWidget(
-      MaterialApp(
-        home: LargeContentViewerTheme(
-          data: themeData ?? const LargeContentViewerThemeData(),
-          child: Scaffold(
-            body: Center(
-              child: LargeContentViewer(
-                scaleFactor: scaleFactor,
-                customOverlayChild: customOverlayChild,
-                child: child,
+      MediaQuery(
+        data: const MediaQueryData(textScaler: TextScaler.linear(1.6)),
+        child: MaterialApp(
+          home: LargeContentViewerTheme(
+            data: themeData ?? const LargeContentViewerThemeData(),
+            child: Scaffold(
+              body: Center(
+                child: LargeContentViewer(
+                  scaleFactor: scaleFactor,
+                  customOverlayChild: customOverlayChild,
+                  child: child,
+                ),
               ),
             ),
           ),

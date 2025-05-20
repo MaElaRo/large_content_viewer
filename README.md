@@ -98,10 +98,12 @@ See the `example/` directory for a more detailed example using `BottomNavigation
 ### `LargeContentViewer` Widget Parameters
 
 | Parameter            | Description                                                                   | Default |
-| -------------------- | ----------------------------------------------------------------------------- | ------- |
-| `child`              | **Required.** The widget to wrap and display normally.                        |         |
-| `customOverlayChild` | An optional widget to display in the popup instead of the scaled `child`.     | `null`  |
-| `scaleFactor`        | How much to scale the `child` in the popup (if `customOverlayChild` is null). | `2.0`   |
+| -------------------- | ----------------------------------------------------------------------------- |--------|
+| `child`              | **Required.** The widget to wrap and display normally.                        |        |
+| `customOverlayChild` | An optional widget to display in the popup instead of the scaled `child`.     | `null` |
+| `scaleFactor`        | How much to scale the `child` in the popup (if `customOverlayChild` is null). | `2.0`  |
+| `enabledFromTextScaleFactor`        | The minimum text scale factor at which the popup becomes active. This allows the viewer to appear only for users with larger accessibility text. | `1.6`  |
+
 
 ### `LargeContentViewerThemeData` Properties
 
